@@ -14,7 +14,10 @@ contract CTypeManagement is Context, CType, ORGManagement {
     function createCtype(
         uint256 organizationId,
         string memory propertiesURI,
-        string memory propertiesHash
+        string memory propertiesHash,
+        bool transferable,
+        bool revokable,
+        bool expirable
     ) public virtual {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender(), organizationId),
@@ -25,7 +28,10 @@ contract CTypeManagement is Context, CType, ORGManagement {
             organizationId,
             _ctypeTracker.current(),
             propertiesURI,
-            propertiesHash
+            propertiesHash,
+            transferable,
+            revokable,
+            expirable
         );
         _ctypeTracker.increment();
     }

@@ -11,6 +11,9 @@ contract CType is Context {
         address issuer;
         string propertiesURI;
         string propertiesHash;
+        bool transferable;
+        bool revokable;
+        bool expirable;
     }
     CTypeMetadata Cmetadata;
 
@@ -38,14 +41,20 @@ contract CType is Context {
         uint256 orgId,
         uint256 CTypeId,
         string memory propertiesURI,
-        string memory propertiesHash
+        string memory propertiesHash,
+        bool transferable,
+        bool revokable,
+        bool expirable
     ) internal virtual {
         Cmetadata = CTypeMetadata(
             orgId,
             CTypeId,
             issuer,
             propertiesURI,
-            propertiesHash
+            propertiesHash,
+            transferable,
+            revokable,
+            expirable
         );
         _CtypeMetadata[CTypeId] = Cmetadata;
         _ctypeList[orgId].push(CTypeId);

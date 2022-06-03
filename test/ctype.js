@@ -25,7 +25,10 @@ describe("Test Creare Ctype", function () {
     await typeManage.createCtype(
       0,
       "https://selendra.org",
-      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      true,
+      true,
+      true
     );
 
     // expect own 1 ctype in org
@@ -52,7 +55,10 @@ describe("Test Creare Ctype", function () {
         .createCtype(
           0,
           "https://selendra.org",
-          "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+          "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+          true,
+          true,
+          true
         )
     ).to.be.revertedWith(
       "must have Admin role in organazation to create credential type"
@@ -81,7 +87,10 @@ describe("Test Creare Ctype", function () {
         .createCtype(
           0,
           "https://selendra.org",
-          "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+          "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+          true,
+          true,
+          true
         )
     ).to.be.revertedWith(
       "must have Admin role in organazation to create credential type"
@@ -109,7 +118,10 @@ describe("Test Creare Ctype", function () {
       .createCtype(
         0,
         "https://selendra.org",
-        "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+        "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+        true,
+        true,
+        true
       );
 
     // expect  own 1 ctype in org
@@ -136,7 +148,10 @@ describe("Test Delete Ctype", function () {
     await typeManage.createCtype(
       0,
       "https://selendra.org",
-      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      true,
+      true,
+      true
     );
 
     // expect own 1 ctype in org
@@ -167,7 +182,10 @@ describe("Test Delete Ctype", function () {
     await typeManage.createCtype(
       0,
       "https://selendra.org",
-      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      true,
+      true,
+      true
     );
 
     // expect own 1 ctype in org
@@ -203,7 +221,10 @@ describe("Test Delete Ctype", function () {
     await typeManage.createCtype(
       0,
       "https://selendra.org",
-      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      true,
+      true,
+      true
     );
 
     // expect own 1 ctype in org
@@ -238,7 +259,10 @@ describe("Test Delete Ctype", function () {
     await typeManage.createCtype(
       0,
       "https://selendra.org",
-      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+      "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      true,
+      true,
+      true
     );
 
     // expect own 1 ctype in org
