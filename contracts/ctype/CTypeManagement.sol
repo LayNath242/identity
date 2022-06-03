@@ -17,7 +17,8 @@ contract CTypeManagement is Context, CType, ORGManagement {
         string memory propertiesHash,
         bool transferable,
         bool revokable,
-        bool expirable
+        bool expirable,
+        uint256 lifespan
     ) public virtual {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender(), organizationId),
@@ -31,7 +32,8 @@ contract CTypeManagement is Context, CType, ORGManagement {
             propertiesHash,
             transferable,
             revokable,
-            expirable
+            expirable,
+            lifespan
         );
         _ctypeTracker.increment();
     }
@@ -44,6 +46,6 @@ contract CTypeManagement is Context, CType, ORGManagement {
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender(), organizationId),
             "must have Admin role in organazation to delete credential type"
         );
-        _delete(organizationId, ctypeId);
+        _delete(ctypeId);
     }
 }
