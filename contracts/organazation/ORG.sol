@@ -33,7 +33,7 @@ contract ORG is Context, IORG {
     mapping(address => uint256) private _organizations;
 
     // Mapping owner address to organization list
-    mapping(address => uint256[]) private _organizationsList;
+    uint256[] private _organizationsList;
 
     function organizationOf(address owner)
         public
@@ -46,15 +46,14 @@ contract ORG is Context, IORG {
         return _organizations[owner];
     }
 
-    function organizationLists(address owner)
+    function organizationLists()
         public
         view
         virtual
         override
         returns (uint256[] memory)
     {
-        require(owner != address(0), "address zero is not a valid owner");
-        return _organizationsList[owner];
+        return _organizationsList;
     }
 
     function ownerOf(uint256 organizationId)
@@ -78,7 +77,7 @@ contract ORG is Context, IORG {
     ) internal virtual {
         metadata = ORGMetadata(organizationId, name, desc, uri);
         _organizationMetadata[organizationId] = metadata;
-        _organizationsList[to].push(organizationId);
+        _organizationsList.push(organizationId);
 
         _create(to, organizationId);
     }
@@ -91,7 +90,7 @@ contract ORG is Context, IORG {
         _organizations[owner] -= 1;
         delete _owners[organizationId];
         delete _organizationMetadata[organizationId];
-        _deleteORGList(owner, organizationId);
+        _deleteORGList(organizationId);
 
         emit Transfer(owner, address(0), organizationId);
 
@@ -102,36 +101,22 @@ contract ORG is Context, IORG {
         _safeTransfer(_msgSender(), to, organizationId, "");
     }
 
-    function _deleteORGList(address owner, uint256 organizationId)
-        internal
-        virtual
-    {
-        for (
-            uint256 index = 0;
-            index < _organizationsList[owner].length;
-            index++
-        ) {
-            if (_organizationsList[owner][index] == organizationId) {
-                _remove(owner, index);
+    function _deleteORGList(uint256 organizationId) internal virtual {
+        for (uint256 index = 0; index < _organizationsList.length; index++) {
+            if (_organizationsList[index] == organizationId) {
+                _remove(index);
                 break;
             }
         }
     }
 
-    function _remove(address owner, uint256 _index) internal virtual {
-        require(
-            _index < _organizationsList[owner].length,
-            "index out of bound"
-        );
+    function _remove(uint256 _index) internal virtual {
+        require(_index < _organizationsList.length, "index out of bound");
 
-        for (
-            uint256 i = _index;
-            i < _organizationsList[owner].length - 1;
-            i++
-        ) {
-            _organizationsList[owner][i] = _organizationsList[owner][i + 1];
+        for (uint256 i = _index; i < _organizationsList.length - 1; i++) {
+            _organizationsList[i] = _organizationsList[i + 1];
         }
-        _organizationsList[owner].pop();
+        _organizationsList.pop();
     }
 
     function _create(address to, uint256 organizationId) internal virtual {
@@ -173,8 +158,8 @@ contract ORG is Context, IORG {
 
         _beforeorganizationTransfer(from, to, organizationId);
 
-        _deleteORGList(from, organizationId);
-        _organizationsList[to].push(organizationId);
+        _deleteORGList(organizationId);
+        _organizationsList.push(organizationId);
 
         _organizations[from] -= 1;
         _organizations[to] += 1;

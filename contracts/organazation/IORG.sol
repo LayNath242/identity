@@ -19,7 +19,7 @@ interface IORG {
         view
         returns (uint256 _organizations);
 
-    function organizationLists(address owner)
+    function organizationLists()
         external
         view
         returns (uint256[] memory _organizationsList);
