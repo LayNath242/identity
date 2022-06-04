@@ -6,8 +6,8 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Arrays.sol";
-import "./IORG.sol";
 import "./IORGReceiver.sol";
+import "./IORG.sol";
 
 contract ORG is Context, IORG {
     using Address for address;
@@ -23,7 +23,11 @@ contract ORG is Context, IORG {
 
     ORGMetadata metadata;
 
-    event CreateOrganazation(address to, uint256 orgId, string message);
+    event CreateOrganazation(
+        address to,
+        uint256 orgId,
+        string message
+    );
 
     event TransferOrganazation(
         address from,
@@ -32,7 +36,11 @@ contract ORG is Context, IORG {
         string message
     );
 
-    event DeleteOrganazation(address from, uint256 orgId, string message);
+    event DeleteOrganazation(
+        address from,
+        uint256 orgId,
+        string message
+    );
 
     // Mapping from organization id to owner address
     mapping(uint256 => address) private _owners;
@@ -112,8 +120,15 @@ contract ORG is Context, IORG {
         _safeTransfer(_msgSender(), to, organizationId, "");
     }
 
-    function _deleteORGList(uint256 organizationId) internal virtual {
-        for (uint256 index = 0; index < _organizationsList.length; index++) {
+    function _deleteORGList(uint256 organizationId)
+        internal
+        virtual
+    {
+        for (
+            uint256 index = 0;
+            index < _organizationsList.length;
+            index++
+        ) {
             if (_organizationsList[index] == organizationId) {
                 _remove(index);
                 break;
@@ -122,9 +137,16 @@ contract ORG is Context, IORG {
     }
 
     function _remove(uint256 _index) internal virtual {
-        require(_index < _organizationsList.length, "index out of bound");
+        require(
+            _index < _organizationsList.length,
+            "index out of bound"
+        );
 
-        for (uint256 i = _index; i < _organizationsList.length - 1; i++) {
+        for (
+            uint256 i = _index;
+            i < _organizationsList.length - 1;
+            i++
+        ) {
             _organizationsList[i] = _organizationsList[i + 1];
         }
         _organizationsList.pop();
@@ -138,11 +160,7 @@ contract ORG is Context, IORG {
         _organizations[to] += 1;
         _owners[organizationId] = to;
 
-        emit CreateOrganazation(
-            to,
-            organizationId,
-            "oraganazation have create"
-        );
+        emit CreateOrganazation(to, organizationId, "oraganazation have create");
 
         _afterorganizationTransfer(address(0), to, organizationId);
     }
@@ -180,12 +198,7 @@ contract ORG is Context, IORG {
         _organizations[to] += 1;
         _owners[organizationId] = to;
 
-        emit TransferOrganazation(
-            from,
-            to,
-            organizationId,
-            "oraganazation have transfer"
-        );
+        emit TransferOrganazation(from, to, organizationId, "oraganazation have transfer");
 
         _afterorganizationTransfer(from, to, organizationId);
     }

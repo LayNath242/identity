@@ -5,10 +5,11 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Context.sol";
 
 contract CType is Context {
-    enum credentialTypeStatus {
+    enum credentialTypeStatus
+    {
         archived,
         active
-    }
+    } 
 
     struct CTypeMetadata {
         uint256 orgId;

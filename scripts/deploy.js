@@ -1,11 +1,13 @@
 const hre = require("hardhat");
 
 async function main() {
-  const Organazations = await hre.ethers.getContractFactory("CTypeManagement");
-  const organazations = await Organazations.deploy();
-  await organazations.deployed();
+  const Credentia = await hre.ethers.getContractFactory(
+    "CreadentialManagement"
+  );
+  const credentia = await Credentia.deploy();
+  await credentia.deployed();
 
-  console.log("CTypeManagement deployed to:", organazations.address);
+  console.log("CreadentialManagement deployed to:", credentia.address);
 }
 
 main()
