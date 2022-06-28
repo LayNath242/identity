@@ -12,7 +12,7 @@ contract CreadentialManagement is Context, Credentia, CTypeManagement {
     Counters.Counter private _credentialTracker;
 
     function issueCredential(
-        uint256 credentialid,
+        // uint256 credentialid,
         uint256 ctypeId,
         address to,
         string memory name,
@@ -30,11 +30,11 @@ contract CreadentialManagement is Context, Credentia, CTypeManagement {
                     _msgSender(),
                     _CtypeMetadata[ctypeId].orgId
                 ),
-            "must me have role in organazation to create credential type"
+            "must be org member"
         );
         _issueCredential(
-            credentialid,
             _credentialTracker.current(),
+            ctypeId,
             to,
             name,
             propertyURI,
@@ -44,7 +44,7 @@ contract CreadentialManagement is Context, Credentia, CTypeManagement {
         _credentialTracker.increment();
     }
 
-    function revokeCredential(uint256 credentialid) public virtual {
+    function toggleRevokeCredential(uint256 credentialid, bool revoke) public virtual {
         require(
             hasRole(
                 DEFAULT_ADMIN_ROLE,
@@ -57,49 +57,53 @@ contract CreadentialManagement is Context, Credentia, CTypeManagement {
                     _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
                         .orgId
                 ),
-            "must me have role in organazation to create credential type"
+           "must be org member"
         );
         require(
             _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
                 .revokable == true,
-            "must me be revokeable credential type"
+           "not revokable type"
         );
-        _revokeCredential(credentialid);
+        if(revoke) {
+            _revokeCredential(credentialid);
+        } else {
+            _unrevokeCredential(credentialid);
+        }
     }
 
-    function unRevokeCredential(uint256 credentialid) public virtual {
-        require(
-            hasRole(
-                DEFAULT_ADMIN_ROLE,
-                _msgSender(),
-                _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId].orgId
-            ) ||
-                hasRole(
-                    VERYFYIER_ROLE,
-                    _msgSender(),
-                    _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
-                        .orgId
-                ),
-            "must me have role in organazation to create credential type"
-        );
-        require(
-            _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
-                .revokable == true,
-            "must me be revokeable credential type"
-        );
-        _unrevokeCredential(credentialid);
-    }
+    // function unRevokeCredential(uint256 credentialid) public virtual {
+    //     require(
+    //         hasRole(
+    //             DEFAULT_ADMIN_ROLE,
+    //             _msgSender(),
+    //             _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId].orgId
+    //         ) ||
+    //             hasRole(
+    //                 VERYFYIER_ROLE,
+    //                 _msgSender(),
+    //                 _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
+    //                     .orgId
+    //             ),
+    //         "must be org member"
+    //     );
+    //     require(
+    //         _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
+    //             .revokable == true,
+    //         "not revokable type"
+    //     );
+    //     _unrevokeCredential(credentialid);
+    // }
 
-    function transfer(uint256 credentialid) public virtual {
+    function transfer(uint256 credentialid, address to) public virtual {
         require(
             _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
                 .transferable == true,
-            "must me be transferable credential type"
+            "not transferable type"
         );
         require(
             _msgSender() == ownerOfCredential(credentialid),
-            "must me be transferable credential type"
+            "only owner"
         );
-        _unrevokeCredential(credentialid);
+        _credentialTransfer(to, credentialid);
     }
 }

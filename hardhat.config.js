@@ -1,5 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
-
+require("dotenv").config();
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -18,4 +18,27 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
+  settings: {
+    optimizer: { enabled: true },
+  },
+  networks: {
+    indranet: {
+      url: "https://indranet-rpc.selendra.org",
+      chainId: 222,
+      accounts: [process.env.PRIVATEKEY],
+      gasPrice: 50000000000,
+    },
+    bsc: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      chainId: 97,
+      accounts: [process.env.PRIVATEKEY],
+      gasPrice: 50000000000,
+    },
+    hh: {
+      url: "http://127.0.0.1:8545",
+      chainId: 31337,
+      accounts: [process.env.PRIVATEKEY],
+      gasPrice: 500000000000,
+    },
+  },
 };
