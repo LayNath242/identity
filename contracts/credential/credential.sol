@@ -43,6 +43,13 @@ contract Credentia is Context {
 
     // Mapping owner address to credential list
     mapping(address => uint256[]) private _credentialsList;
+    
+    // Mapping ctypes to users 
+    mapping(uint256 => uint256[]) private _credentialsByCType;
+
+    function usersByCTypes(uint256 ctypeId) public view returns(uint256[] memory) {
+        return _credentialsByCType[ctypeId];
+    }
 
     function ownerOfCredential(uint256 credentialid)
         public
@@ -76,7 +83,7 @@ contract Credentia is Context {
         credentialMetadata = CredentialMetadata(credentialid, ctypeId, to, name, propertyURI, propertyHash, block.timestamp, credentialStatus.valid);
         _credentiallMetadata[credentialid] = credentialMetadata;
         _credentialsList[to].push(credentialid);
-
+        _credentialsByCType[ctypeId].push(credentialid);
         _issue(to, credentialid);
 
     }
