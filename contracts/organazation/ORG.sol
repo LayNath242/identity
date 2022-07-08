@@ -23,7 +23,7 @@ contract ORG is Context, IORG {
 
     ORGMetadata metadata;
 
-    event CreateOrganazation(address to, uint256 orgId, string message);
+    // event CreateOrganazation(address to, uint256 orgId, string message);
 
     event TransferOrganazation(
         address from,
@@ -32,7 +32,7 @@ contract ORG is Context, IORG {
         string message
     );
 
-    event DeleteOrganazation(address from, uint256 orgId, string message);
+    // event DeleteOrganazation(address from, uint256 orgId, string message);
 
     // Mapping from organization id to owner address
     mapping(uint256 => address) private _owners;
@@ -118,7 +118,7 @@ contract ORG is Context, IORG {
         _deleteORGList(organizationId);
         _deleteORGList(owner, organizationId);
 
-        emit DeleteOrganazation(owner, organizationId, "Delete organazation");
+        // emit DeleteOrganazation(owner, organizationId, "Delete organazation");
 
         _afterorganizationTransfer(owner, address(0), organizationId);
     }
@@ -187,11 +187,11 @@ contract ORG is Context, IORG {
         _organizations[to] += 1;
         _owners[organizationId] = to;
 
-        emit CreateOrganazation(
-            to,
-            organizationId,
-            "oraganazation have create"
-        );
+        // emit CreateOrganazation(
+        //     to,
+        //     organizationId,
+        //     "oraganazation have create"
+        // );
 
         _afterorganizationTransfer(address(0), to, organizationId);
     }

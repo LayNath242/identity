@@ -11,8 +11,12 @@ contract CreadentialManagement is Context, Credentia, CTypeManagement {
 
     Counters.Counter private _credentialTracker;
 
+    event TransferCredential(
+        address to,
+        uint256 credentialid
+    );
+
     function issueCredential(
-        // uint256 credentialid,
         uint256 ctypeId,
         address to,
         string memory name,
@@ -65,34 +69,11 @@ contract CreadentialManagement is Context, Credentia, CTypeManagement {
            "not revokable type"
         );
         if(revoke) {
-            _revokeCredential(credentialid);
-        } else {
             _unrevokeCredential(credentialid);
+        } else {
+            _revokeCredential(credentialid);
         }
     }
-
-    // function unRevokeCredential(uint256 credentialid) public virtual {
-    //     require(
-    //         hasRole(
-    //             DEFAULT_ADMIN_ROLE,
-    //             _msgSender(),
-    //             _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId].orgId
-    //         ) ||
-    //             hasRole(
-    //                 VERYFYIER_ROLE,
-    //                 _msgSender(),
-    //                 _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
-    //                     .orgId
-    //             ),
-    //         "must be org member"
-    //     );
-    //     require(
-    //         _CtypeMetadata[_credentiallMetadata[credentialid].ctypeId]
-    //             .revokable == true,
-    //         "not revokable type"
-    //     );
-    //     _unrevokeCredential(credentialid);
-    // }
 
     function transfer(uint256 credentialid, address to) public virtual {
         require(
@@ -105,5 +86,7 @@ contract CreadentialManagement is Context, Credentia, CTypeManagement {
             "only owner"
         );
         _credentialTransfer(to, credentialid);
+        emit TransferCredential(to, credentialid);
+
     }
 }
